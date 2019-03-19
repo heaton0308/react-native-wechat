@@ -70,7 +70,7 @@ RCT_EXPORT_METHOD(registerAppWithDescription:(NSString *)appid
                   :(NSString *)appdesc
                   :(RCTResponseSenderBlock)callback)
 {
-    callback(@[[WXApi registerApp:appid withDescription:appdesc] ? [NSNull null] : INVOKE_FAILED]);
+    callback(@[[WXApi registerApp:appid enableMTA:appdesc] ? [NSNull null] : INVOKE_FAILED]);
 }
 
 RCT_EXPORT_METHOD(isWXAppInstalled:(RCTResponseSenderBlock)callback)
@@ -147,11 +147,9 @@ RCT_EXPORT_METHOD(shareToTimeline:(NSDictionary *)data
 {
     [self shareToWeixinWithData:data scene:WXSceneTimeline callback:callback];
 }
-
-RCT_EXPORT_METHOD(shareToSession:(NSDictionary *)data
-                  :(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(shareToSession:(NSDictionary *)data :(RCTResponseSenderBlock)callback)
 {
-    [self shareToWeixinWithData:data scene:WXSceneSession callbackc:allback];
+    [self shareToWeixinWithData:data scene:WXSceneSession callback:callback];
 }
 
 RCT_EXPORT_METHOD(shareToFavorite:(NSDictionary *)data
@@ -293,16 +291,8 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
 
             
             NSString *webpageUrl = aData[@"webpageUrl"];
-        
             
-            [self shareToWeixinWithMiniProgramReq:userName
-                                       WebpageUrl:webpageUrl
-                                            Title:(NSString *)title
-                                      Description:(NSString *)description
-                                            aPath:path
-                                  MiniProgramType:miniProgramType
-                                         callBack:callback];
-            
+            [self shareToWeixinWithMiniProgramReq:userName Title:title Description:description WebpageUrl:webpageUrl aPath:path MiniProgramType:miniProgramType callBack:callback];
             
         }else {
             callback(@[@"message type unsupported"]);
@@ -379,9 +369,9 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     object.webpageUrl = webpageUrl; // 兼容低版本的网页链接
     object.userName = userName; //小程序的userName
     object.path = path; //小程序的页面路径
-    object.hdImageData = hdImageData; //小程序新版本的预览图二进制数据，6.5.9及以上版本微信客户端支持
-    object.withShareTicket = withShareTicket; //是否使用带shareTicket的分享
-    object.miniProgramType = programType; //分享的x小程序环境
+    object.hdImageData = @""; //小程序新版本的预览图二进制数据，6.5.9及以上版本微信客户端支持
+    object.withShareTicket = NULL; //是否使用带shareTicket的分享
+    object.miniProgramType = miniProgramType; //分享的x小程序环境
     
     WXMediaMessage *message = [WXMediaMessage message];
     message.title = title;
