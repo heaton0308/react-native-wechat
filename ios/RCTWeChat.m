@@ -17,6 +17,7 @@
 #define NOT_REGISTERED (@"registerApp required.")
 #define INVOKE_FAILED (@"WeChat API invoke returns false.")
 
+
 @implementation RCTWeChat
 
 @synthesize bridge = _bridge;
@@ -177,8 +178,10 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
                         scene:(int)aScene
                      callBack:(RCTResponseSenderBlock)callback
 {
-    NSString *type = aData[RCTWXShareTitle];
-    
+    NSString *type = aData[RCTWXShareType];
+
+
+
     if ([type isEqualToString:RCTWXShareTypeText]) {
         NSString *text = aData[RCTWXShareDescription];
         [self shareToWeixinWithTextMessage:aScene Text:text callBack:callback];
@@ -284,11 +287,12 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
                                        callBack:callback];
             
         } else if ([type isEqualToString:RCTWXShareTypeMiniProgramReq]){
-            NSString * userName = aData[@"name"];
-            NSString *path = aData[@"page"];
+            NSString * userName = @"秦学在线";
+            NSString *path = aData[@"path"];
 //            int miniProgramType = aData[@"miniProgramType"];
             int miniProgramType = WXMiniProgramTypeTest;
-
+    
+            NSLog(@"==-=-=-=============data-%@",aData);
             
             NSString *webpageUrl = aData[@"webpageUrl"];
             
@@ -369,9 +373,10 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     object.webpageUrl = webpageUrl; // 兼容低版本的网页链接
     object.userName = userName; //小程序的userName
     object.path = path; //小程序的页面路径
-    object.hdImageData = @""; //小程序新版本的预览图二进制数据，6.5.9及以上版本微信客户端支持
+    object.hdImageData = nil; //小程序新版本的预览图二进制数据，6.5.9及以上版本微信客户端支持
     object.withShareTicket = NULL; //是否使用带shareTicket的分享
     object.miniProgramType = miniProgramType; //分享的x小程序环境
+    
     
     WXMediaMessage *message = [WXMediaMessage message];
     message.title = title;
@@ -380,11 +385,12 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     //使用WXMiniProgramObject的hdImageData属性
     message.mediaObject = object;
     
+    
     SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
     req.bText = NO;
     req.message = message;
     req.scene = WXSceneSession;  //目前只支持会话
-    [WXApi sendReq:req];
+ 
     
     BOOL success = [WXApi sendReq:req];
     callback(@[success ? [NSNull null] : INVOKE_FAILED]);
