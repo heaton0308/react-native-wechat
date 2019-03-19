@@ -10,8 +10,8 @@
 		10D6D7A71F160C250066F0F3 /* RCTWeChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 10D6D7A61F160C250066F0F3 /* RCTWeChatTests.m */; };
 		10D6D7A91F160C250066F0F3 /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D238421BD0BB9E00C75D01 /* libRCTWeChat.a */; };
 		10D6D7AF1F160C3A0066F0F3 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10D6D76D1F160B090066F0F3 /* libReact.a */; };
+		2F55D10422407D1A004F4FC0 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D238571BD0BC2200C75D01 /* libWeChatSDK.a */; };
 		86D238561BD0BC1000C75D01 /* RCTWeChat.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D238551BD0BC1000C75D01 /* RCTWeChat.m */; };
-		86D2385D1BD0CA3D00C75D01 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D238571BD0BC2200C75D01 /* libWeChatSDK.a */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,7 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86D2385D1BD0CA3D00C75D01 /* libWeChatSDK.a in Frameworks */,
+				2F55D10422407D1A004F4FC0 /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +182,13 @@
 			path = RCTWeChatTests;
 			sourceTree = "<group>";
 		};
+		2F55D10322407D1A004F4FC0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		86D238391BD0BB9E00C75D01 = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +199,7 @@
 				10D6D7A51F160C250066F0F3 /* RCTWeChatTests */,
 				86D238431BD0BB9E00C75D01 /* Products */,
 				10D6D75D1F160B090066F0F3 /* React.xcodeproj */,
+				2F55D10322407D1A004F4FC0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

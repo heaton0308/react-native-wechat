@@ -22,7 +22,7 @@
 #define RCTWXShareTypeVideo @"video"
 #define RCTWXShareTypeAudio @"audio"
 #define RCTWXShareTypeFile @"file"
-#define RCTWXShareTypeMiniProgramReq:@"miniProgramReq"
+#define RCTWXShareTypeMiniProgramReq:@"mini"
 
 
 #define RCTWXShareType @"type"

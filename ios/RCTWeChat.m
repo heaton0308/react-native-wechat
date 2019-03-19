@@ -288,12 +288,19 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
         } else if ([type isEqualToString:RCTWXShareTypeMiniProgramReq]){
             NSString * userName = aData[@"name"];
             NSString *path = aData[@"page"];
-            NSString *miniProgramType = aData[@"miniProgramType"];
-            NSString *webpageUrl = aData[@"webpageUrl"];
+//            int miniProgramType = aData[@"miniProgramType"];
+            int miniProgramType = WXMiniProgramTypeTest;
+
             
-            [self shareToWeixinWithMiniProgramReq:userName webpageUrl:webpageUrl
+            NSString *webpageUrl = aData[@"webpageUrl"];
+        
+            
+            [self shareToWeixinWithMiniProgramReq:userName
+                                       WebpageUrl:webpageUrl
+                                            Title:(NSString *)title
+                                      Description:(NSString *)description
                                             aPath:path
-                                  miniProgramType:miniProgramType
+                                  MiniProgramType:miniProgramType
                                          callBack:callback];
             
             
@@ -361,7 +368,12 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     callback(@[success ? [NSNull null] : INVOKE_FAILED]);
 }
 
--(void)shareToWeixinWithMiniProgramReq:(NSString *)userName webpageUrl:(NSString *)webpageUrl aPath:(NSString *)path miniProgramType:(NSString *)miniProgramType callBack:(RCTResponseSenderBlock)callback{
+-(void)shareToWeixinWithMiniProgramReq:(NSString *)userName
+                                 Title:(NSString *)title
+                           Description:(NSString *)description
+                            WebpageUrl:(NSString *)webpageUrl
+                                 aPath:(NSString *)path
+                       MiniProgramType:(int)miniProgramType callBack:(RCTResponseSenderBlock)callback{
     
     WXMiniProgramObject *object = [WXMiniProgramObject object];
     object.webpageUrl = webpageUrl; // 兼容低版本的网页链接
@@ -372,8 +384,8 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     object.miniProgramType = programType; //分享的x小程序环境
     
     WXMediaMessage *message = [WXMediaMessage message];
-    message.title = @"小程序标题";
-    message.description = @"小程序描述";
+    message.title = title;
+    message.description = description;
     message.thumbData = nil;  //兼容旧版本节点的图片，小于32KB，新版本优先
     //使用WXMiniProgramObject的hdImageData属性
     message.mediaObject = object;
