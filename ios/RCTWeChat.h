@@ -22,12 +22,16 @@
 #define RCTWXShareTypeVideo @"video"
 #define RCTWXShareTypeAudio @"audio"
 #define RCTWXShareTypeFile @"file"
+#define RCTWXShareTypeMiniProgramReq:@"miniProgramReq"
+
 
 #define RCTWXShareType @"type"
 #define RCTWXShareTitle @"title"
 #define RCTWXShareDescription @"description"
 #define RCTWXShareWebpageUrl @"webpageUrl"
 #define RCTWXShareImageUrl @"imageUrl"
+#define RETWXShareTMiniProgramReq:@"mini"
+
 
 #define RCTWXEventName @"WeChat_Resp"
 
