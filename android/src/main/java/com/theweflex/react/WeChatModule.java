@@ -55,6 +55,8 @@ import java.util.UUID;
  */
 public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEventHandler {
     private String appId;
+    private String userName;
+    private int miniprogramType;
 
     private IWXAPI api = null;
     private final static String NOT_REGISTERED = "registerApp required.";
@@ -104,8 +106,11 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
     }
 
     @ReactMethod
-    public void registerApp(String appid, Callback callback) {
+    public void registerApp(String appid, String userName,int miniprogramType, Callback callback) {
         this.appId = appid;
+        this.userName = userName;
+        this.miniprogramType = miniprogramType;
+
         api = WXAPIFactory.createWXAPI(this.getReactApplicationContext().getBaseContext(), appid, true);
         callback.invoke(null, api.registerApp(appid));
     }
@@ -480,8 +485,8 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
     private WXMiniProgramObject __jsonToMiniMedia(ReadableMap data){
         WXMiniProgramObject ret = new WXMiniProgramObject();
         ret.webpageUrl = data.getString("webpageUrl");
-        ret.miniprogramType = WXMiniProgramObject.MINIPROGRAM_TYPE_TEST;
-        ret.userName = "gh_a16d35412953";
+        ret.miniprogramType = this.miniProgramType;
+        ret.userName = this.userName ;
         ret.path = data.getString("path");
         return ret;
     }

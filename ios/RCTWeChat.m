@@ -60,10 +60,12 @@ RCT_EXPORT_MODULE()
     return YES;
 }
 
-RCT_EXPORT_METHOD(registerApp:(NSString *)appid
+RCT_EXPORT_METHOD(registerApp:(NSString *)appid UserName:(NSString *)userName MiniprogramType:(int)miniprogramType
                   :(RCTResponseSenderBlock)callback)
 {
     self.appId = appid;
+    self.userName = userName;
+    self.miniprogramType = miniprogramType;
     callback(@[[WXApi registerApp:appid] ? [NSNull null] : INVOKE_FAILED]);
 }
 
@@ -287,12 +289,11 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
                                        callBack:callback];
             
         } else if ([type isEqualToString:RCTWXShareTypeMiniProgramReq]){
-            NSString * userName = @"秦学在线";
+            NSString * userName = self.userName;
             NSString *path = aData[@"path"];
-//            int miniProgramType = aData[@"miniProgramType"];
-            int miniProgramType = WXMiniProgramTypeTest;
-    
-            NSLog(@"==-=-=-=============data-%@",aData);
+//            int miniProgramType =  [[aData objectForKey:@"miniProgramType"] intValue];
+//            int miniProgramType = WXMiniProgramTypeTest;
+            int miniProgramType = self.miniprogramType;
             
             NSString *webpageUrl = aData[@"webpageUrl"];
             

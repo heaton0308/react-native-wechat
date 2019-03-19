@@ -38,5 +38,7 @@
 @interface RCTWeChat : NSObject <RCTBridgeModule, WXApiDelegate>
 
 @property NSString* appId;
+@property NSString*userName;
+@property int miniprogramType;
 
 @end
