@@ -291,13 +291,14 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
         } else if ([type isEqualToString:RCTWXShareTypeMiniProgramReq]){
             NSString * userName = self.userName;
             NSString *path = aData[@"path"];
+            NSString *thumbImage = aData[@"thumbImage"];
 //            int miniProgramType =  [[aData objectForKey:@"miniProgramType"] intValue];
 //            int miniProgramType = WXMiniProgramTypeTest;
             int miniProgramType = self.miniprogramType;
             
             NSString *webpageUrl = aData[@"webpageUrl"];
             
-            [self shareToWeixinWithMiniProgramReq:userName Title:title Description:description WebpageUrl:webpageUrl aPath:path MiniProgramType:miniProgramType callBack:callback];
+            [self shareToWeixinWithMiniProgramReq:userName Title:title Description:description ThumbImage:(NSString *)thumbImage WebpageUrl:webpageUrl aPath:path MiniProgramType:miniProgramType callBack:callback];
             
         }else {
             callback(@[@"message type unsupported"]);
@@ -366,6 +367,7 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
 -(void)shareToWeixinWithMiniProgramReq:(NSString *)userName
                                  Title:(NSString *)title
                            Description:(NSString *)description
+                            ThumbImage:(NSString *)thumbImage
                             WebpageUrl:(NSString *)webpageUrl
                                  aPath:(NSString *)path
                        MiniProgramType:(int)miniProgramType callBack:(RCTResponseSenderBlock)callback{
@@ -374,8 +376,8 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     object.webpageUrl = webpageUrl; // 兼容低版本的网页链接
     object.userName = userName; //小程序的userName
     object.path = path; //小程序的页面路径
-    object.hdImageData = nil; //小程序新版本的预览图二进制数据，6.5.9及以上版本微信客户端支持
-    object.withShareTicket = NULL; //是否使用带shareTicket的分享
+    object.hdImageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[thumbImage stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]]; //小程序新版本的预览图二进制数据，6.5.9及以上版本微信客户端支持
+    object.withShareTicket = NO; //是否使用带shareTicket的分享
     object.miniProgramType = miniProgramType; //分享的x小程序环境
     
     
