@@ -26,6 +26,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.tencent.mm.opensdk.constants.Build;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -130,7 +131,8 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
             callback.invoke(NOT_REGISTERED);
             return;
         }
-        callback.invoke(null, api.isWXAppSupportAPI());
+        //判断微信当前版本是否支持支付
+        callback.invoke(null, api.getWXAppSupportAPI()< Build.PAY_SUPPORTED_SDK_INT);
     }
 
     @ReactMethod
@@ -259,7 +261,11 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
                         imageCallback.invoke(bitmap);
                     }
                 } else {
-                    throw new Exception("Empty bitmap");
+                    try {
+                        throw new Exception("Empty bitmap");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -485,7 +491,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
     private WXMiniProgramObject __jsonToMiniMedia(ReadableMap data){
         WXMiniProgramObject ret = new WXMiniProgramObject();
         ret.webpageUrl = data.getString("webpageUrl");
-        ret.miniprogramType = this.miniProgramType;
+        ret.miniprogramType =  this.miniprogramType;
         ret.userName = this.userName ;
         ret.path = data.getString("path");
         return ret;
