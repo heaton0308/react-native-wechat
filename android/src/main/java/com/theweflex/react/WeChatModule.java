@@ -57,7 +57,7 @@ import java.util.UUID;
 public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEventHandler {
     private String appId;
     private String userName;
-    private int miniprogramType;
+    private Integer miniprogramType;
 
     private IWXAPI api = null;
     private final static String NOT_REGISTERED = "registerApp required.";
@@ -107,7 +107,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
     }
 
     @ReactMethod
-    public void registerApp(String appid, String userName,int miniprogramType, Callback callback) {
+    public void registerApp(String appid, String userName,Integer miniprogramType, Callback callback) {
         this.appId = appid;
         this.userName = userName;
         this.miniprogramType = miniprogramType;
